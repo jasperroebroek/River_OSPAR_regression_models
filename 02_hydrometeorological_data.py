@@ -32,7 +32,10 @@ df.loc[:, 'date_lag_2d'] = df.date.apply(lambda x: date_subtract(x, days=2) if x
 df.loc[:, 'date_lag_7d'] = df.date.apply(lambda x: date_subtract(x, days=7) if x != "0" else "0")
 df.loc[:, 'date_lag_14d'] = df.date.apply(lambda x: date_subtract(x, days=14) if x != "0" else "0")
 df.loc[:, 'date_lag_1m'] = df.date.apply(lambda x: date_subtract(x, months=1) if x != "0" else "0")
+df.loc[:, 'date_lag_2m'] = df.date.apply(lambda x: date_subtract(x, months=2) if x != "0" else "0")
 df.loc[:, 'date_lag_6m'] = df.date.apply(lambda x: date_subtract(x, months=6) if x != "0" else "0")
+
+lags = ['date_lag_1d', 'date_lag_2d', 'date_lag_7d', 'date_lag_14d', 'date_lag_1m', 'date_lag_2m', 'date_lag_6m']
 
 # KNMI DATA
 knmi_data = pd.read_csv("data/wind_and_precip_KNMI/KNMI_20191001.txt", skiprows=64)
@@ -91,7 +94,7 @@ def extract_knmi_data(gebiedscode, start, end, col, fun, p=2):
 
 
 # SUM P_DAY
-for date_lag in ['date_lag_1d', 'date_lag_2d', 'date_lag_7d', 'date_lag_14d', 'date_lag_1m', 'date_lag_6m']:
+for date_lag in lags:
     new_col = "P_" + date_lag[date_lag.find("lag") + 4:] + "_sum"
     print(new_col)
     df.loc[:, new_col] = np.nan
@@ -109,7 +112,7 @@ for date_lag in ['date_lag_1d', 'date_lag_2d', 'date_lag_7d', 'date_lag_14d', 'd
         df.loc[index, new_col] = extract_knmi_data(gebiedscode, start, end, col, fun)
 
 # MAX P_DAY
-for date_lag in ['date_lag_1d', 'date_lag_2d', 'date_lag_7d', 'date_lag_14d', 'date_lag_1m', 'date_lag_6m']:
+for date_lag in lags:
     new_col = "P_" + date_lag[date_lag.find("lag") + 4:] + "_max"
     print(new_col)
     df.loc[:, new_col] = np.nan
@@ -127,7 +130,7 @@ for date_lag in ['date_lag_1d', 'date_lag_2d', 'date_lag_7d', 'date_lag_14d', 'd
         df.loc[index, new_col] = extract_knmi_data(gebiedscode, start, end, col, fun)
 
 # MAX WIND SPEAD
-for date_lag in ['date_lag_1d', 'date_lag_2d', 'date_lag_7d', 'date_lag_14d', 'date_lag_1m', 'date_lag_6m']:
+for date_lag in lags:
     new_col = "U_" + date_lag[date_lag.find("lag") + 4:] + "_max"
     print(new_col)
     df.loc[:, new_col] = np.nan
@@ -145,7 +148,7 @@ for date_lag in ['date_lag_1d', 'date_lag_2d', 'date_lag_7d', 'date_lag_14d', 'd
         df.loc[index, new_col] = extract_knmi_data(gebiedscode, start, end, col, fun)
 
 # AVERAGE WIND SPEAD
-for date_lag in ['date_lag_1d', 'date_lag_2d', 'date_lag_7d', 'date_lag_14d', 'date_lag_1m', 'date_lag_6m']:
+for date_lag in lags:
     new_col = "U_" + date_lag[date_lag.find("lag") + 4:] + "_mean"
     print(new_col)
     df.loc[:, new_col] = np.nan
@@ -227,7 +230,7 @@ def extract_rws_data(gebiedscode, start, end, fun, coord_col, col='value', p=2):
 
 
 # Maximum water height above height at measurement time
-for date_lag in ['date_lag_2d', 'date_lag_7d', 'date_lag_14d', 'date_lag_1m', 'date_lag_6m']:
+for date_lag in lags:
     new_col = "h_" + date_lag[date_lag.find("lag") + 4:] + "_max_above_current"
     print(new_col)
     df.loc[:, new_col] = np.nan

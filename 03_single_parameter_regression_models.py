@@ -56,10 +56,10 @@ for i, row in df.iterrows():
         df.time_after_last.loc[i] = previous_dates.min()
 
 for parameter in ["time_after_last", "dop", "season", "river", "sampling",
-                  "P_2d_max", "P_7d_max", "P_14d_max", "P_1m_max", "P_6m_max",
-                  "U_2d_max", "U_7d_max", "U_14d_max", "U_1m_max", "U_6m_max",
+                  "P_2d_max", "P_7d_max", "P_14d_max", "P_1m_max", "P_2m_max", "P_6m_max",
+                  "U_2d_max", "U_7d_max", "U_14d_max", "U_1m_max", "U_2m_max", "U_6m_max",
                   "h_2d_max_above_current", "h_7d_max_above_current", "h_14d_max_above_current",
-                  "h_1m_max_above_current", "h_6m_max_above_current"]:
+                  "h_1m_max_above_current", "h_2m_max_above_current", "h_6m_max_above_current"]:
     print(parameter)
     print("_____________________________________________________________________________")
     for item in ITEMS:
